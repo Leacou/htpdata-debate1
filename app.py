@@ -5,6 +5,8 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import plotly.express as px
+import os
+
 
 
 # Obtener los datos y crear el DataFrame
@@ -49,5 +51,11 @@ def update_graph(selected_country):
     fig = px.line(filtered_data, x='Year', y='Inflation', title=f'Inflation in {selected_country}')
     return fig
 
+
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    # Obtén el número de puerto proporcionado por Heroku o usa el puerto 8050 de forma predeterminada
+    port = int(os.environ.get('PORT', 8050))
+    
+    # Ejecuta la aplicación en el puerto especificado
+    app.run_server(host='0.0.0.0', port=port)
+
